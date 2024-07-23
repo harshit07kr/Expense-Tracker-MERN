@@ -21,7 +21,7 @@ app.use(
 app.use(cookieParser());
 
 // Routes
-readdirSync('./routes').map((route) => app.use('/api', require('./routes/' + route)));
+readdirSync('./routes').map((route) => app.use('/', require('./routes/' + route)));
 
 // Serve static files from the React frontend app
 app.use(express.static(path.join(__dirname, '../build')));
