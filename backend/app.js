@@ -1,7 +1,8 @@
 const express = require('express')
 const cors = require('cors');
 const { db } = require('./db/db');
-const {readdirSync} = require('fs')
+const path = require('path');
+const { readdirSync } = require('fs');
 const cookieParser = require('cookie-parser');
 const app = express()
 
@@ -23,8 +24,14 @@ app.use(cookieParser());
 
 
 //routes
-readdirSync('./routes').map((route) => app.use('/', require('./routes/' + route)))
+const routesPath = path.join(__dirname, 'routes');
+console.log('Routes Path:', routesPath); // Debugging line
 
+try {
+  readdirSync(routesPath).map((route) => app.use('/', require(path.join(routesPath, route))));
+} catch (error) {
+  console.error('Error reading routes directory:', error);
+}
 const server = () => {
     db()
     app.listen(PORT, () => {
