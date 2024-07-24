@@ -10,19 +10,18 @@ require('dotenv').config()
 
 const PORT = process.env.PORT
 
+
 //middlewares
 app.use(
     cors({
-      origin: [
-        'http://localhost:3000', 
-        'https://expense-tracker-jcyt.vercel.app'
-      ],
+      origin: true,
       credentials: true,
     })
   );
-
-app.use(express.json());
+  
 app.use(cookieParser());
+app.use(express.json());
+
 
 //routes
 const routesPath = path.join(__dirname, 'routes');
@@ -33,7 +32,6 @@ try {
 } catch (error) {
   console.error('Error reading routes directory:', error);
 }
-
 const server = () => {
     db()
     app.listen(PORT, () => {
