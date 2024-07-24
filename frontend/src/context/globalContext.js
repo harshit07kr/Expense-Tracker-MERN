@@ -9,24 +9,18 @@ export const GlobalProvider = ({ children }) => {
     const [incomes, setIncomes] = useState([]);
     const [expenses, setExpenses] = useState([]);
     const [error, setError] = useState(null);
-    const [token, setToken] = useState(localStorage.getItem('token'));
 
+    // Fetch incomes and expenses on component mount
     useEffect(() => {
-        if (token) {
-            getIncomes();
-            getExpenses();
-        }
-    }, [token]);
+        getIncomes();
+        getExpenses();
+    }, []);
 
     // Add income
     const addIncome = async (income) => {
         try {
-            await axios.post(`${BASE_URL}/add-income`, income, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            getIncomes();
+            await axios.post(`${BASE_URL}/add-income`, income, { withCredentials: true });
+            await getIncomes(); // Refresh incomes after adding
         } catch (err) {
             setError(err.response?.data?.message || err.message);
         }
@@ -35,11 +29,7 @@ export const GlobalProvider = ({ children }) => {
     // Get incomes
     const getIncomes = async () => {
         try {
-            const response = await axios.get(`${BASE_URL}/get-incomes`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
+            const response = await axios.get(`${BASE_URL}/get-incomes`, { withCredentials: true });
             setIncomes(response.data);
             console.log(response.data);
         } catch (err) {
@@ -50,12 +40,8 @@ export const GlobalProvider = ({ children }) => {
     // Delete income
     const deleteIncome = async (id) => {
         try {
-            await axios.delete(`${BASE_URL}/delete-income/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            getIncomes();
+            await axios.delete(`${BASE_URL}/delete-income/${id}`, { withCredentials: true });
+            await getIncomes(); // Refresh incomes after deletion
         } catch (err) {
             setError(err.response?.data?.message || err.message);
         }
@@ -69,12 +55,8 @@ export const GlobalProvider = ({ children }) => {
     // Add expense
     const addExpense = async (expense) => {
         try {
-            await axios.post(`${BASE_URL}/add-expense`, expense, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            getExpenses();
+            await axios.post(`${BASE_URL}/add-expense`, expense, { withCredentials: true });
+            await getExpenses(); // Refresh expenses after adding
         } catch (err) {
             setError(err.response?.data?.message || err.message);
         }
@@ -83,11 +65,7 @@ export const GlobalProvider = ({ children }) => {
     // Get expenses
     const getExpenses = async () => {
         try {
-            const response = await axios.get(`${BASE_URL}/get-expenses`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
+            const response = await axios.get(`${BASE_URL}/get-expenses`, { withCredentials: true });
             setExpenses(response.data);
             console.log(response.data);
         } catch (err) {
@@ -98,12 +76,8 @@ export const GlobalProvider = ({ children }) => {
     // Delete expense
     const deleteExpense = async (id) => {
         try {
-            await axios.delete(`${BASE_URL}/delete-expense/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            getExpenses();
+            await axios.delete(`${BASE_URL}/delete-expense/${id}`, { withCredentials: true });
+            await getExpenses(); // Refresh expenses after deletion
         } catch (err) {
             setError(err.response?.data?.message || err.message);
         }
@@ -141,8 +115,7 @@ export const GlobalProvider = ({ children }) => {
             totalBalance,
             transactionHistory,
             error,
-            setError,
-            setToken
+            setError
         }}>
             {children}
         </GlobalContext.Provider>
