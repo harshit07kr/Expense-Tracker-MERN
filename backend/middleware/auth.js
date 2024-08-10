@@ -10,7 +10,7 @@ async function requireAuth(req, res, next) {
     const decoded = jwt.verify(token, process.env.SECRET);
 
     // Check expiration
-    if (Date.now() > decoded.exp) return res.sendStatus(401);
+    if (Date.now() > decoded.exp * 1000) return res.sendStatus(401);
 
     // Find user using decoded sub
     const user = await User.findById(decoded.sub);
@@ -22,8 +22,10 @@ async function requireAuth(req, res, next) {
     // continue on
     next();
   } catch (err) {
+    console.error('Authentication error:', err);
     return res.sendStatus(401);
   }
+  
 }
 
 module.exports = requireAuth;

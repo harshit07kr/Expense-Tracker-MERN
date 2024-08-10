@@ -13,11 +13,16 @@ const PORT = process.env.PORT
 
 //middlewares
 app.use(
-    cors({
-      origin: true,
-      credentials: true,
-    })
-  );
+  cors({
+    origin: [
+      'http://localhost:3000',                  // For development
+      'https://expense-tracker-jcyt.vercel.app' // For production
+    ],
+    credentials: true,
+  })
+);
+
+
   
 app.use(cookieParser());
 app.use(express.json());
