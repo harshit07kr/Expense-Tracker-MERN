@@ -11,10 +11,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    incomes:[{type: mongoose.Schema.Types.ObjectId,ref :"income"}],
-    expenses:[{type: mongoose.Schema.Types.ObjectId,ref :"expense"}],
+    incomes:[{type: mongoose.Schema.Types.ObjectId,ref :`income`}],
+    expenses:[{type: mongoose.Schema.Types.ObjectId,ref :`expense`}],
 }, { timestamps: true });
 
-const User = mongoose.model("User",UserSchema);
+const User = mongoose.model(`User`, UserSchema);
 
 module.exports=User;

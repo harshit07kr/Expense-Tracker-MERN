@@ -17,7 +17,7 @@ const IncomeSchema = new mongoose.Schema({
     },
     type: {
         type: String,
-        default:"income"
+        default:`income`
     },
     date: {
         type: Date,
@@ -37,8 +37,8 @@ const IncomeSchema = new mongoose.Schema({
     },
     user:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        ref: `User`,
     }
 }, {timestamps: true})
 
-module.exports = mongoose.model('Income', IncomeSchema)
+module.exports = mongoose.model(`Income`, IncomeSchema)
