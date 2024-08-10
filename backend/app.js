@@ -16,7 +16,7 @@ app.use(
   cors({
     origin: [
       'http://localhost:3000',                  // For development
-      'https://expense-tracker-jcyt.vercel.app' // For production
+      'https://expense-tracker0-7.vercel.app' // For production
     ],
     credentials: true,
   })
